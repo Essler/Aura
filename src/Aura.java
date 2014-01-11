@@ -16,6 +16,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
@@ -26,6 +27,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EtchedBorder;
@@ -80,10 +82,14 @@ public class Aura extends JFrame {
 		JPanel panel = new JPanel();
 		getContentPane().add(panel);
 		panel.setLayout(null);
+		//panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 
 		// Quit Button
 		JButton quitButton = new JButton("Quit");
 		initQuitButton(quitButton);
+		//quitButton.setAlignmentY(BOTTOM_ALIGNMENT);
+		//quitButton.setAlignmentX(RIGHT_ALIGNMENT);
+		//panel.add(quitButton, BorderLayout.SOUTH);
 		panel.add(quitButton);
 
 		// Menu Bar
@@ -93,11 +99,27 @@ public class Aura extends JFrame {
 		// Popup Menu
 		popupMenu = new JPopupMenu();
 		initPopupMenu();
+		
+
+		ClassLoader cl = this.getClass().getClassLoader();
+		ImageIcon iconExit = new ImageIcon(
+				cl.getResource("images/exit_small.png"));
+		ImageIcon iconSave = new ImageIcon(
+				cl.getResource("images/save_all_small.png"));
+		
+		// Tool Bars
+//		JToolBar toolbar = new JToolBar();
+//		initToolBar(toolbar, iconExit);
+//		toolbar.setAlignmentX(0); // Left-align toolbar
+		
+//		JToolBar toolbar2 = new JToolBar();
+//		initToolBar(toolbar2, iconSave);
+//		toolbar2.setAlignmentX(0);
 	}
 
 	private void initQuitButton(JButton button) {
 
-		button.setBounds(getWidth() - 110, getHeight() - 130, 80, 30);
+		//button.setBounds(getWidth() - 110, getHeight() - 130, 80, 30);
 		button.setToolTipText("Quit Aura");
 
 		button.addActionListener(new ActionListener() {
@@ -220,5 +242,18 @@ public class Aura extends JFrame {
 				}
 			}
 		});
+	}
+	
+	private void initToolBar(JToolBar toolbar, ImageIcon icon) {
+
+		JButton exitButton = new JButton(icon);
+		toolbar.add(exitButton);
+		exitButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent even) {
+				System.exit(0);
+			}
+		});
+		
+		add(toolbar);
 	}
 }
